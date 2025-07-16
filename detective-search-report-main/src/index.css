@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Detective Digital Theme - Light Mode */
+    --background: 42 15% 97%;
+    --foreground: 42 15% 15%;
+
+    --card: 42 25% 95%;
+    --card-foreground: 42 15% 15%;
+
+    --popover: 42 25% 95%;
+    --popover-foreground: 42 15% 15%;
+
+    /* Detective primary color - dark khaki */
+    --primary: 42 20% 18%;
+    --primary-foreground: 42 25% 95%;
+
+    /* Beige/cream secondary */
+    --secondary: 42 25% 88%;
+    --secondary-foreground: 42 20% 25%;
+
+    /* Muted amber tones */
+    --muted: 42 20% 92%;
+    --muted-foreground: 42 10% 55%;
+
+    /* Investigative accent - amber */
+    --accent: 45 80% 75%;
+    --accent-foreground: 42 20% 18%;
+
+    /* Error - classic red */
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 42 25% 95%;
+
+    /* Subtle borders */
+    --border: 42 20% 85%;
+    --input: 42 20% 90%;
+    --ring: 45 80% 65%;
+
+    /* Custom detective theme colors */
+    --detective-report: 42 30% 96%;
+    --detective-border: 42 25% 75%;
+    --detective-shadow: 42 20% 25%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Detective Digital Theme - Dark Mode */
+    --background: 42 15% 8%;
+    --foreground: 42 25% 92%;
+
+    --card: 42 20% 12%;
+    --card-foreground: 42 25% 92%;
+
+    --popover: 42 20% 12%;
+    --popover-foreground: 42 25% 92%;
+
+    /* Dark primary - light khaki */
+    --primary: 42 25% 85%;
+    --primary-foreground: 42 20% 15%;
+
+    /* Dark secondary */
+    --secondary: 42 15% 18%;
+    --secondary-foreground: 42 25% 85%;
+
+    /* Dark muted */
+    --muted: 42 10% 15%;
+    --muted-foreground: 42 10% 65%;
+
+    /* Dark accent - amber */
+    --accent: 45 70% 65%;
+    --accent-foreground: 42 20% 15%;
+
+    /* Error - red for dark */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 42 25% 92%;
+
+    /* Dark borders */
+    --border: 42 15% 22%;
+    --input: 42 15% 20%;
+    --ring: 45 70% 55%;
+
+    /* Custom detective dark colors */
+    --detective-report: 42 15% 10%;
+    --detective-border: 42 20% 30%;
+    --detective-shadow: 42 10% 5%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-pulse-subtle {
+    animation: pulseSubtle 2s infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}

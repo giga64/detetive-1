@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>🕵️‍♂️ Detetive - Resultado da Consulta</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" href="/static/favicon.ico" />
+</head>
+<body>
+  <div class="container">
+    <header><h1>🕵️‍♂️ Detetive - Relatório</h1></header>
+    <main>
+      <h2>{{ mensagem }}</h2>
+      <pre class="report">{{ resultado }}</pre>
+
+      {% if history %}
+      <section class="history">
+        <h3>🔍 Suas últimas buscas</h3>
+        <ul>
+          {% for ident, resp, ts in history %}
+          <li>
+            <details>
+              <summary><strong>{{ ts }}</strong> → {{ ident }}</summary>
+              <pre class="report" style="margin-top:0.5rem;">{{ resp }}</pre>
+            </details>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      <a href="/" class="back">🔙 Nova busca</a>
+    </main>
+  </div>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🕵️‍♂️ Detetive - Histórico de Consultas</title>
+  <link rel="stylesheet" href="/static/modern-style.css">
+  <link rel="icon" href="/static/favicon.ico">
+</head>
+<body>
+  <div class="detective-container">
+    <div class="detective-card">
+      <!-- Theme Toggle -->
+      <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema">
+        <span id="theme-icon">🌙</span>
+      </button>
+
+      <!-- Header -->
+      <div class="detective-header">
+        <div class="icon">
+          📋
+          <h1>Detetive - Histórico</h1>
+        </div>
+        <p class="subtitle">Suas consultas anteriores</p>
+      </div>
+
+      <!-- History Section -->
+      <div class="history-section">
+        <div class="history-list" id="local-history-list">
+          <!-- Preenchido via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="navigation-links">
+        <a href="/" class="back-link">
+          ← Voltar para nova investigação
+        </a>
+        <button onclick="clearHistory()" class="clear-button">
+          🗑️ Limpar histórico
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/detective.js"></script>
+  <script>
+    let localHistoryManager;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      localHistoryManager = new LocalHistoryManager();
+      loadLocalHistory();
+      
+      // Fechar modal com ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      });
+    });
+
+    function loadLocalHistory() {
+      const localHistory = localHistoryManager.getHistory();
+      const container = document.getElementById('local-history-list');
+      
+      if (localHistory.length === 0) {
+        container.innerHTML = '<div class="empty-history"><p>Nenhuma busca encontrada no histórico.</p></div>';
+        return;
+      }
+      
+      container.innerHTML = localHistory.map(item => {
+        const isPending = item.isPending;
+        const statusIcon = isPending ? '⏳' : '✅';
+        const statusClass = isPending ? 'pending' : 'completed';
+        const preview = isPending ? item.response : item.response.substring(0, 100) + (item.response.length > 100 ? '...' : '');
+        
+        return `
+          <div class="history-item clickable ${statusClass}" onclick="reuseSearch('${item.identifier}')">
+            <div class="history-header">
+              <div class="history-identifier">${item.identifier}</div>
+              <div class="history-status">${statusIcon}</div>
+            </div>
+            <div class="history-timestamp">${new Date(item.timestamp).toLocaleString('pt-BR')}</div>
+            <div class="history-preview">${preview}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function reuseSearch(identifier) {
+      // Busca os dados da consulta no histórico local
+      const searchData = localHistoryManager.getSearchByIdentifier(identifier);
+      
+      if (searchData && !searchData.isPending) {
+        // Se tem dados completos, mostra a página de resultado
+        showSearchResult(identifier, searchData.response);
+      } else {
+        // Se não tem dados ou está pendente, redireciona para nova consulta
+        window.location.href = `/?reuse=${identifier}`;
+      }
+    }
+
+    function showSearchResult(identifier, result) {
+      // Cria uma modal ou página para mostrar o resultado
+      const modal = document.createElement('div');
+      modal.className = 'result-modal';
+      
+      // Formata o resultado para HTML
+      const formattedResult = result
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>')
+        .replace(/\s{2,}/g, '&nbsp;&nbsp;');
+      
+      modal.innerHTML = `
+        <div class="result-modal-content">
+          <div class="result-modal-header">
+            <h2>🔍 Resultado da Consulta</h2>
+            <button onclick="closeModal()" class="close-button" title="Fechar (ESC)">×</button>
+          </div>
+          <div class="result-modal-body">
+            <div class="result-identifier">
+              <strong>CPF/CNPJ:</strong> ${identifier}
+            </div>
+            <div class="result-content">
+              ${formattedResult}
+            </div>
+          </div>
+          <div class="result-modal-footer">
+            <button onclick="closeModal()" class="back-button">← Voltar ao histórico</button>
+            <button onclick="newSearch('${identifier}')" class="new-search-button">🔍 Nova consulta</button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      document.body.style.overflow = 'hidden';
+      
+      // Foco no botão de fechar para acessibilidade
+      setTimeout(() => {
+        const closeButton = modal.querySelector('.close-button');
+        if (closeButton) closeButton.focus();
+      }, 100);
+    }
+
+    function closeModal() {
+      const modal = document.querySelector('.result-modal');
+      if (modal) {
+        modal.remove();
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    function newSearch(identifier) {
+      closeModal();
+      window.location.href = `/?reuse=${identifier}`;
+    }
+
+    function clearHistory() {
+      if (confirm('Tem certeza que deseja limpar todo o histórico?')) {
+        localHistoryManager.clearHistory();
+        location.reload();
+      }
+    }
+  </script>
+</body>
+</html> 

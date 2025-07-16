@@ -1,0 +1,26 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>🕵️‍♂️ Detetive - Consulta CPF/CNPJ</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" href="/static/favicon.ico" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🕵️‍♂️ Detetive</h1>
+      <p class="subtitle">Sistema de consulta de CPF e CNPJ</p>
+    </header>
+    <main>
+      <form action="/consulta" method="post">
+        <label for="identificador">🔎 Identificador (CPF ou CNPJ):</label>
+        <input id="identificador" name="identificador" placeholder="Ex: 01234567890" required />
+        <button type="submit">Iniciar investigação</button>
+        {% if erro %}<p class="error">{{ erro }}</p>{% endif %}
+      </form>
+    </main>
+  </div>
+</body>
+</html>
+

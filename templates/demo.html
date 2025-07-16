@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🕵️‍♂️ Detective CPF/CNPJ - Demonstração</title>
+  <link rel="stylesheet" href="/static/modern-style.css">
+  <style>
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .demo-section {
+      margin-bottom: 3rem;
+    }
+    
+    .demo-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--foreground);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .demo-description {
+      text-align: center;
+      color: var(--muted-foreground);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .demo-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .demo-card h3 {
+      color: var(--foreground);
+      margin-bottom: 1rem;
+    }
+    
+    .demo-card p {
+      color: var(--muted-foreground);
+      line-height: 1.6;
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .feature-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--foreground);
+    }
+    
+    .feature-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .feature-list li::before {
+      content: "✅ ";
+      margin-right: 0.5rem;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      margin: 1rem;
+    }
+    
+    .cta-button:hover {
+      background: var(--accent-foreground);
+      transform: translateY(-2px);
+    }
+    
+    .demo-actions {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="detective-container">
+    <div class="demo-container">
+      <!-- Header -->
+      <div class="demo-section">
+        <h1 class="demo-title">🕵️‍♂️ Detective CPF/CNPJ</h1>
+        <p class="demo-description">
+          Visual moderno inspirado no design profissional do detective-search-report-main
+        </p>
+        
+        <!-- Theme Toggle -->
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema">
+            <span id="theme-icon">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="demo-grid">
+        <div class="demo-card">
+          <h3>🎨 Design System</h3>
+          <ul class="feature-list">
+            <li>Tema Detective com cores profissionais</li>
+            <li>Modo escuro/claro automático</li>
+            <li>Tipografia moderna (Inter)</li>
+            <li>Animações suaves e elegantes</li>
+          </ul>
+        </div>
+
+        <div class="demo-card">
+          <h3>🔧 Funcionalidades</h3>
+          <ul class="feature-list">
+            <li>Formatação automática CPF/CNPJ</li>
+            <li>Validação em tempo real</li>
+            <li>Estado de carregamento visual</li>
+            <li>Interface responsiva</li>
+          </ul>
+        </div>
+
+        <div class="demo-card">
+          <h3>📱 Interface</h3>
+          <ul class="feature-list">
+            <li>Layout centralizado com card flutuante</li>
+            <li>Botão de tema integrado</li>
+            <li>Histórico visual organizado</li>
+            <li>Navegação intuitiva</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Demo Form -->
+      <div class="demo-section">
+        <h2 class="demo-title">📝 Demonstração do Formulário</h2>
+        <div style="max-width: 400px; margin: 0 auto;">
+          <div class="detective-card">
+            <div class="detective-header">
+              <div class="icon">
+                🔍
+                <h1>Detective CPF/CNPJ</h1>
+              </div>
+              <p class="subtitle">Insira o CPF ou CNPJ para iniciar a investigação.</p>
+            </div>
+
+            <form class="investigation-form" onsubmit="demoSubmit(event)">
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  id="demo-identificador" 
+                  class="form-input"
+                  placeholder="Ex: 01234567890 ou 12.345.678/0001-90"
+                  oninput="formatCpfCnpj(this)"
+                >
+              </div>
+              
+              <button type="submit" class="submit-button">
+                🔍 Iniciar investigação
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="demo-actions">
+        <a href="/" class="cta-button">🚀 Testar Aplicação Real</a>
+        <a href="README-MODERN.md" class="cta-button">📖 Ver Documentação</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/detective.js"></script>
+  <script>
+    function demoSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('demo-identificador');
+      const value = input.value.replace(/\D/g, '');
+      
+      if (value.length !== 11 && value.length !== 14) {
+        alert('Digite um CPF (11 dígitos) ou CNPJ (14 dígitos) válido.');
+        return;
+      }
+      
+      alert('Esta é apenas uma demonstração! Para testar a funcionalidade real, acesse a aplicação principal.');
+    }
+  </script>
+</body>
+</html> 
